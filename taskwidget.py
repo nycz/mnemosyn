@@ -42,6 +42,8 @@ class TaskWidget(QtGui.QFrame):
             class TaskDescription(QtGui.QLabel): pass
             self.desc = TaskDescription(task['desc'])
             self.desc.setVisible(False)
+            self.desc_indicator = TaskNumber('[…]')
+            top_layout.insertWidget(top_layout.count()-1, self.desc_indicator)
             main_layout.addWidget(self.desc)
         else:
             self.desc = None
@@ -54,4 +56,5 @@ class TaskWidget(QtGui.QFrame):
 
     def mouseReleaseEvent(self, event):
         if self.mouse_down and self.mouse_pos == event.pos():
-            self.desc.setVisible((self.desc.isVisible()+1)%2)
+            self.desc.setVisible(not self.desc.isVisible())
+            self.desc_indicator.setVisible(not self.desc.isVisible())

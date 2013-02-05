@@ -31,6 +31,14 @@ class TaskWidget(QtGui.QFrame):
         main_layout.addLayout(num_text_layout)
         # ===========================
 
+        # ============ Date ===========
+        class TaskDate(QtGui.QLabel): pass
+        self.date = TaskDate(task['date'])
+        main_layout.addWidget(self.date)
+        if not task['date']:
+            self.date.setVisible(False)
+        # ===========================
+
         # =========== Tags ==========
         class TaskTag(QtGui.QLabel): pass
         class TaskTagWarning(TaskTag): pass

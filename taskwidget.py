@@ -17,7 +17,7 @@ class TaskWidget(QtGui.QFrame):
         main_layout.setMargin(0)
         main_layout.setSpacing(0)
 
-        # ====== First row ========
+        # ====== Number and name ========
         class TaskNumber(QtGui.QLabel): pass
         num = TaskNumber('#{}'.format(task['num']))
 
@@ -31,12 +31,14 @@ class TaskWidget(QtGui.QFrame):
         main_layout.addLayout(top_layout)
         # =========================
 
-        # ====== Second row =======
-        class TaskTags(QtGui.QLabel): pass
-        tags = TaskTags(', '.join(sorted(task['tags'])))
-
+        # =========== Tags ==========
+        class TaskTag(QtGui.QLabel): pass
         btm_layout = QtGui.QHBoxLayout()
-        btm_layout.addWidget(tags)
+        btm_layout.setMargin(0)
+        btm_layout.setSpacing(0)
+        for t in sorted(task['tags']):
+            btm_layout.addWidget(TaskTag(t))
+        btm_layout.addStretch()
         main_layout.addLayout(btm_layout)
         # =========================
 
@@ -45,7 +47,8 @@ class TaskWidget(QtGui.QFrame):
             class TaskDescription(QtGui.QLabel): pass
             self.desc = TaskDescription(task['desc'])
             self.desc.setVisible(False)
-            self.desc_indicator = TaskNumber('[…]')
+            class TaskDescriptionIndicator(QtGui.QLabel): pass
+            self.desc_indicator = TaskDescriptionIndicator('[…]')
             top_layout.insertWidget(top_layout.count()-1, self.desc_indicator)
             main_layout.addWidget(self.desc)
         else:

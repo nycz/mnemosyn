@@ -56,6 +56,8 @@ class MainWindow(QtGui.QFrame):
         self.new_task_dialog = NewTaskDialog(self)
 
         main_layout = QtGui.QHBoxLayout(self)
+        main_layout.setMargin(0)
+        main_layout.setSpacing(0)
 
         self.taglist, self.tasklist, self.counter \
             = read_tasklist(local_path('tasklist.json'))
@@ -75,6 +77,8 @@ class MainWindow(QtGui.QFrame):
 
         splitter.addWidget(self.tag_widget)
         splitter.addWidget(self.task_widget)
+        splitter.setStretchFactor(0,0)
+        splitter.setStretchFactor(1,1)
 
         def reload_css():
             with open(local_path('qtstylesheet.css'), encoding='utf8') as f:
@@ -92,6 +96,7 @@ class MainWindow(QtGui.QFrame):
 
         self.show()
         self.resize(800,600)
+        splitter.moveSplitter(200,1)
 
     def new_task(self):
         self.new_task_dialog.reset(self.counter)

@@ -13,33 +13,77 @@ MainWindow {
     background: #333;
 }
 
+QLabel {
+    font-family: Calibri;
+    font-size: 12pt;
+    /*background: #acf;
+    color: black;
+    border: 1px solid red;
+    padding: 0px;
+    margin: 0px;
+*/}
+
 ListWidget, ListWidgetContainer {
     background: #eee;
     border: 1px solid #999;
 }
 
-QLabel {
-    background: none;
-    color: black;
+
+/* ============= Tag widget =============== */
+TagListWidget {
 }
 
 TagWidget {
-    background: #fff;
+    background: #bbb;
     border: 1px solid #999;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 3px;
+    padding: 1px;
+    padding-left: 10px;
+    padding-right: 15px;
 }
+/* ======================================== */
 
+
+/* ============= Task widget ============== */
 TaskWidget {
     background: #fff;
     border: 1px solid #999;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 8px;
+    padding: 5px;
 }
 TaskNumber {
     color: #777;
+    font-style: italic;
+    margin-right: 8px;
+}
+TaskDescription {
+    background: #e8e8e8;
+    padding: 10px;
+}
+TaskDescriptionIndicator {
+    color: #777;
+    margin-left: 8px;
 }
 TaskText {
     font-weight: bold;
 }
-TaskTags {
-    font-style: italic;
+TaskTag {
+    /*font-style: italic;*/
+    background: #779;
+    border-radius: 4px;
+    color: #eee;
+    font-family: lucida console;
+    font-size: 8pt;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    padding: 2px;
 }
+/* ======================================== */
 
 

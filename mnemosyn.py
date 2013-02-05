@@ -1,7 +1,8 @@
 import os.path
 import sys
 
-from common import QtCore, QtGui, SIGNAL, Qt
+from PyQt4 import QtGui
+
 from common import local_path, read_json, write_json
 from newtaskdialog import NewTaskDialog
 from taskwidget import TaskWidget

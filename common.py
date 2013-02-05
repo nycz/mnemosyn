@@ -2,10 +2,6 @@ import json
 import os.path
 import sys
 
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import SIGNAL, Qt, QDir, QEvent
-
-
 def read_json(path):
     if not os.path.isfile(path):
         return None

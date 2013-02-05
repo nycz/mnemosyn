@@ -1,4 +1,4 @@
-from common import QtCore, QtGui, SIGNAL, Qt
+from PyQt4 import QtGui
 
 class TaskWidget(QtGui.QFrame):
     def __init__(self, task):

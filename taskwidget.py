@@ -24,25 +24,25 @@ class TaskWidget(QtGui.QFrame):
         class TaskText(QtGui.QLabel): pass
         self.text = TaskText(task['text'])
 
-        top_layout = QtGui.QHBoxLayout()
-        top_layout.addWidget(num)
-        top_layout.addWidget(self.text)
-        top_layout.addStretch()
-        main_layout.addLayout(top_layout)
-        # =========================
+        num_text_layout = QtGui.QHBoxLayout()
+        num_text_layout.addWidget(num)
+        num_text_layout.addWidget(self.text)
+        num_text_layout.addStretch()
+        main_layout.addLayout(num_text_layout)
+        # ===========================
 
         # =========== Tags ==========
         class TaskTag(QtGui.QLabel): pass
         class TaskTagWarning(TaskTag): pass
-        btm_layout = QtGui.QHBoxLayout()
-        btm_layout.setMargin(0)
-        btm_layout.setSpacing(0)
+        tag_layout = QtGui.QHBoxLayout()
+        tag_layout.setMargin(0)
+        tag_layout.setSpacing(0)
         for t in sorted(task['tags']):
-            btm_layout.addWidget(TaskTag(t))
+            tag_layout.addWidget(TaskTag(t))
         if not task['tags']:
-            btm_layout.addWidget(TaskTagWarning("Missing tags!"))
-        btm_layout.addStretch()
-        main_layout.addLayout(btm_layout)
+            tag_layout.addWidget(TaskTagWarning("Missing tags!"))
+        tag_layout.addStretch()
+        main_layout.addLayout(tag_layout)
         # =========================
 
         # ====== Bottom row =======
@@ -52,7 +52,7 @@ class TaskWidget(QtGui.QFrame):
             self.desc.setVisible(False)
             class TaskDescriptionIndicator(QtGui.QLabel): pass
             self.desc_indicator = TaskDescriptionIndicator('[…]')
-            top_layout.insertWidget(top_layout.count()-1, self.desc_indicator)
+            num_text_layout.insertWidget(num_text_layout.count()-1, self.desc_indicator)
             main_layout.addWidget(self.desc)
         else:
             self.desc = None

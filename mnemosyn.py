@@ -33,6 +33,19 @@ class ListWidget(QtGui.QScrollArea):
         self.internal_layout.insertWidget(pos, widget)
 
 
+class TagListWidget(ListWidget):
+
+    def add_widgets(self, datalist, widget_constructor, tasklist):
+        super().add_widgets(datalist, widget_constructor)
+        self.update_tag_count(tasklist)
+
+    def update_tag_count(self, tasklist):
+        for i in range(self.internal_layout.count()):
+            item = self.internal_layout.itemAt(i)
+            if not item.isEmpty():
+                item.widget().update_count(tasklist)
+
+
 class MainWindow(QtGui.QFrame):
     def __init__(self):
         super().__init__()
@@ -48,8 +61,8 @@ class MainWindow(QtGui.QFrame):
         main_layout.addWidget(splitter)
 
         # ====== Tag widget =========
-        self.tag_widget = ListWidget()
-        self.tag_widget.add_widgets(sorted(self.taglist), TagWidget)
+        self.tag_widget = TagListWidget()
+        self.tag_widget.add_widgets(sorted(self.taglist), TagWidget, self.tasklist)
         # ===========================
 
         # ====== Task widget ========
@@ -91,6 +104,7 @@ class MainWindow(QtGui.QFrame):
                 widget = TagWidget(t)
                 self.tag_widget.insert_widget(widget,
                                               sorted(self.taglist).index(t))
+            self.tag_widget.update_tag_count(self.tasklist)
 
 
 def read_tasklist(path):

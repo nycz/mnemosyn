@@ -9,8 +9,7 @@ class NewTaskDialog(QtGui.QDialog):
 
         layout = QtGui.QFormLayout(self)
         self.text_input = QtGui.QLineEdit(self)
-        self.desc_input = QtGui.QLineEdit(self)
-        #TODO: tags
+        self.desc_input = QtGui.QPlainTextEdit(self)
 
         layout.addWidget(QtGui.QLabel('New task #{}'.format(number)))
         layout.addRow('&Text:', self.text_input)
@@ -29,4 +28,4 @@ class NewTaskDialog(QtGui.QDialog):
                 'num': self.number,
                 'tags': [],
                 'closed': False,
-                'desc': self.desc_input.text()}
+                'desc': self.desc_input.toPlainText()}

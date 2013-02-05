@@ -7,8 +7,14 @@ from PyQt4.QtCore import SIGNAL, Qt, QDir, QEvent
 
 
 def read_json(path):
+    if not os.path.isfile(path):
+        return None
     with open(path, encoding='utf-8') as f:
-        return json.loads(f.read())
+        data = f.read()
+    if not data:
+        return None
+    else:
+        return json.loads(data)
 
 def write_json(path, data):
     with open(path, 'w', encoding='utf-8') as f:

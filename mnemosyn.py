@@ -116,14 +116,18 @@ class MainWindow(QtGui.QFrame):
 
 
 def read_tasklist(path):
-    if not os.path.isfile(path):
-        return set(), [], 1
     data = read_json(path)
+    if data is None:
+        return set(), [], 1
     num = max([t['num'] for t in data['tasks'] ]) + 1
     return set(data['tags']), data['tasks'], num
 
 def write_tasklist(path, taglist, tasklist):
-    write_json(path, {'tags': list(taglist), 'tasks': tasklist})
+    out = []
+    for x in tasklist:
+        x['tags'] = list(x['tags'])
+        out.append(x)
+    write_json(path, {'tags': list(taglist), 'tasks': out})
 
 
 def main():

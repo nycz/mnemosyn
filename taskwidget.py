@@ -1,5 +1,7 @@
 from PyQt4 import QtGui
 
+from common import kill_theming
+
 class TaskWidget(QtGui.QFrame):
     def __init__(self, task):
         super().__init__()
@@ -13,9 +15,7 @@ class TaskWidget(QtGui.QFrame):
 
         main_layout = QtGui.QVBoxLayout(self)
 
-        # Let the stylesheet take care of styling, eh?
-        main_layout.setMargin(0)
-        main_layout.setSpacing(0)
+        kill_theming(main_layout)
 
         # ====== Number and name ========
         class TaskNumber(QtGui.QLabel): pass

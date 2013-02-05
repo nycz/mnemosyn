@@ -18,3 +18,7 @@ def write_json(path, data):
 
 def local_path(path):
     return os.path.join(sys.path[0], path)
+
+def kill_theming(layout):
+    layout.setMargin(0)
+    layout.setSpacing(0)

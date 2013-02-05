@@ -1,5 +1,7 @@
 from PyQt4 import QtGui
 
+from common import kill_theming
+
 
 class TagWidget(QtGui.QFrame):
     def __init__(self, name):
@@ -14,9 +16,7 @@ class TagWidget(QtGui.QFrame):
         self.count_lbl = TagCount('1')
         main_layout.addWidget(self.count_lbl)
 
-        # Let the stylesheet take care of styling, eh?
-        main_layout.setMargin(0)
-        main_layout.setSpacing(0)
+        kill_theming(main_layout)
 
     def update_count(self, tasklist):
         num = sum([1 for t in tasklist if self.name in t['tags']])

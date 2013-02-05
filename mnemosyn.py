@@ -3,7 +3,7 @@ import sys
 
 from PyQt4 import QtGui
 
-from common import local_path, read_json, write_json
+from common import local_path, read_json, write_json, kill_theming
 from newtaskdialog import NewTaskDialog
 from taskwidget import TaskWidget
 from tagwidget import TagWidget
@@ -57,8 +57,7 @@ class MainWindow(QtGui.QFrame):
         self.new_task_dialog = NewTaskDialog(self)
 
         main_layout = QtGui.QHBoxLayout(self)
-        main_layout.setMargin(0)
-        main_layout.setSpacing(0)
+        kill_theming(main_layout)
 
         self.taglist, self.tasklist, self.counter \
             = read_tasklist(local_path('tasklist.json'))

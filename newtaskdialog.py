@@ -39,8 +39,8 @@ class NewTaskDialog(QtGui.QDialog):
 
 
     def get_data(self):
-        tags = [x.strip() for x in self.tags_input.text().split(',')
-                if x.strip()]
+        tags = set([x.strip() for x in self.tags_input.text().split(',')
+                        if x.strip()])
         return {'text': self.text_input.text(),
                 'num': self.number,
                 'tags': tags,

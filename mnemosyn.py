@@ -85,7 +85,7 @@ class MainWindow(QtGui.QFrame):
             self.tasklist.append(data)
             self.task_widget.append_widget(TaskWidget(data))
             self.counter += 1
-            new_tags = set(data['tags']) - self.taglist
+            new_tags = data['tags'] - self.taglist
             self.taglist.update(data['tags'])
             for t in sorted(new_tags):
                 widget = TagWidget(t)

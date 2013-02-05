@@ -29,7 +29,7 @@ class TaskWidget(QtGui.QFrame):
 
         # ====== Second row =======
         class TaskTags(QtGui.QLabel): pass
-        tags = TaskTags(', '.join(task['tags']))
+        tags = TaskTags(', '.join(sorted(task['tags'])))
 
         btm_layout = QtGui.QHBoxLayout()
         btm_layout.addSpacing(40)

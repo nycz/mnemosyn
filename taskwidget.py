@@ -1,45 +1,51 @@
 from common import QtCore, QtGui, SIGNAL, Qt
 
-
 class TaskWidget(QtGui.QFrame):
     def __init__(self, task):
         super().__init__()
         self.task = task
+
+        if task['closed']:
+            self.setVisible(False)
 
         self.mouse_down = False
         self.mouse_pos = None
 
         main_layout = QtGui.QVBoxLayout(self)
 
-        top_layout = QtGui.QHBoxLayout()
+        # ====== First row ========
         class TaskNumber(QtGui.QLabel): pass
         num = TaskNumber('#{}'.format(task['num']))
-        top_layout.addWidget(num)
 
         class TaskText(QtGui.QLabel): pass
         self.text = TaskText(task['text'])
+
+        top_layout = QtGui.QHBoxLayout()
+        top_layout.addWidget(num)
         top_layout.addWidget(self.text)
         top_layout.addStretch()
+        main_layout.addLayout(top_layout)
+        # =========================
+
+        # ====== Second row =======
+        class TaskTags(QtGui.QLabel): pass
+        tags = TaskTags(', '.join(task['tags']))
 
         btm_layout = QtGui.QHBoxLayout()
         btm_layout.addSpacing(40)
-        class TaskTags(QtGui.QLabel): pass
-        tags = TaskTags(', '.join(task['tags']))
         btm_layout.addWidget(tags)
-
-        if task['closed']:
-            self.setVisible(False)
-
-        main_layout.addLayout(top_layout)
         main_layout.addLayout(btm_layout)
+        # =========================
 
-        class TaskDescription(QtGui.QLabel): pass
+        # ====== Bottom row =======
         if task['desc']:
+            class TaskDescription(QtGui.QLabel): pass
             self.desc = TaskDescription(task['desc'])
             self.desc.setVisible(False)
             main_layout.addWidget(self.desc)
         else:
             self.desc = None
+        # =========================
 
     def mousePressEvent(self, event):
         if self.desc:

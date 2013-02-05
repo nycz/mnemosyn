@@ -5,6 +5,8 @@ class NewTaskDialog(QtGui.QDialog):
         super().__init__(parent)
         self.number = number
         self.setWindowTitle('New task')
+        self.setModal(True)
+
         layout = QtGui.QFormLayout(self)
         self.text_input = QtGui.QLineEdit(self)
         self.desc_input = QtGui.QLineEdit(self)
@@ -21,7 +23,6 @@ class NewTaskDialog(QtGui.QDialog):
         layout.addRow(button_row)
 
 
-        self.setModal(True)
 
     def get_data(self):
         return {'text': self.text_input.text(),

@@ -72,7 +72,8 @@ def write_tasklist(path, data):
 
 def main():
     app = QtGui.QApplication(sys.argv)
-    a = MainWindow()
+    window = MainWindow()
+    app.setActiveWindow(window)
     sys.exit(app.exec_())
 
 

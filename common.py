@@ -2,12 +2,8 @@ import json
 import os.path
 import sys
 
-try:
-    from PySide import QtCore, QtGui
-    from PySide.QtCore import SIGNAL, Qt, QDir, QEvent
-except ImportError:
-    from PyQt4 import QtCore, QtGui
-    from PyQt4.QtCore import SIGNAL, Qt, QDir, QEvent
+from PyQt4 import QtCore, QtGui
+from PyQt4.QtCore import SIGNAL, Qt, QDir, QEvent
 
 
 def read_json(path):

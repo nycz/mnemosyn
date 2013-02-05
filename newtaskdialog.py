@@ -1,9 +1,10 @@
 from common import QtCore, QtGui, SIGNAL, Qt
 
 class NewTaskDialog(QtGui.QDialog):
-    def __init__(self, number, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.number = number
+
+        self.number = -1 # Must be set in reset()
         self.setWindowTitle('New task')
         self.setModal(True)
 
@@ -11,7 +12,8 @@ class NewTaskDialog(QtGui.QDialog):
         self.text_input = QtGui.QLineEdit(self)
         self.desc_input = QtGui.QPlainTextEdit(self)
 
-        layout.addWidget(QtGui.QLabel('New task #{}'.format(number)))
+        self.title_lbl = QtGui.QLabel()
+        layout.addWidget(self.title_lbl)
         layout.addRow('&Text:', self.text_input)
         layout.addRow('&Description:', self.desc_input)
 
@@ -21,6 +23,12 @@ class NewTaskDialog(QtGui.QDialog):
         button_row.rejected.connect(self.reject)
         layout.addRow(button_row)
 
+    def reset(self, number):
+        self.text_input.clear()
+        self.desc_input.clear()
+        self.text_input.setFocus()
+        self.number = number
+        self.title_lbl.setText('New task #{}'.format(number))
 
 
     def get_data(self):

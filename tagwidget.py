@@ -7,9 +7,11 @@ class TagWidget(QtGui.QFrame):
         self.name = name
 
         main_layout = QtGui.QHBoxLayout(self)
-        main_layout.addWidget(QtGui.QLabel(name))
+        class TagName(QtGui.QLabel): pass
+        main_layout.addWidget(TagName(name))
         main_layout.addStretch()
-        self.count_lbl = QtGui.QLabel('1')
+        class TagCount(QtGui.QLabel): pass
+        self.count_lbl = TagCount('1')
         main_layout.addWidget(self.count_lbl)
 
         # Let the stylesheet take care of styling, eh?

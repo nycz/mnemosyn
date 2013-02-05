@@ -20,28 +20,48 @@ QLabel {
     color: black;
     border: 1px solid red;
     padding: 0px;
-    margin: 0px;
-*/}
+    margin: 0px;*/
+}
 
 ListWidget, ListWidgetContainer {
-    background: #eee;
+    background: #dde;
     border: 1px solid #999;
 }
 
 
 /* ============= Tag widget =============== */
 TagListWidget {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 white, stop:1 green)
 }
 
 TagWidget {
-    background: #bbb;
-    border: 1px solid #999;
-    margin-left: 3px;
+    background: #ccd;
+    border-radius: 5px;
+    /*border: 1px solid #555;*/
+    /*margin-left: 3px;
     margin-right: 3px;
-    margin-top: 3px;
-    padding: 1px;
-    padding-left: 10px;
-    padding-right: 15px;
+    margin-top: 3px;*/
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+    /*padding: 1px;*/
+}
+TagName {
+    background: #779;
+    border-radius: 4px;
+    color: #eee;
+    font-family: lucida console;
+    font-size: 9pt;
+    margin-right: 10px;
+    padding: 2px;
+}
+TagCount {
+    background: #99b;
+    border-radius: 4px;
+    font-family: lucida console;
+    font-size: 9pt;
+    padding: 2px;
 }
 /* ======================================== */
 

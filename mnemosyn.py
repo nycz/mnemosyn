@@ -14,6 +14,9 @@ class ListWidget(QtGui.QScrollArea):
         super().__init__()
         container = self.ListWidgetContainer()
         self.internal_layout = QtGui.QVBoxLayout(container)
+        # Let the stylesheet take care of styling, eh?
+        self.internal_layout.setMargin(0)
+        self.internal_layout.setSpacing(0)
         self.setWidget(container)
         self.setWidgetResizable(True)
 

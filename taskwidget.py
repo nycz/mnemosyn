@@ -13,6 +13,10 @@ class TaskWidget(QtGui.QFrame):
 
         main_layout = QtGui.QVBoxLayout(self)
 
+        # Let the stylesheet take care of styling, eh?
+        main_layout.setMargin(0)
+        main_layout.setSpacing(0)
+
         # ====== First row ========
         class TaskNumber(QtGui.QLabel): pass
         num = TaskNumber('#{}'.format(task['num']))
@@ -32,7 +36,6 @@ class TaskWidget(QtGui.QFrame):
         tags = TaskTags(', '.join(sorted(task['tags'])))
 
         btm_layout = QtGui.QHBoxLayout()
-        btm_layout.addSpacing(40)
         btm_layout.addWidget(tags)
         main_layout.addLayout(btm_layout)
         # =========================

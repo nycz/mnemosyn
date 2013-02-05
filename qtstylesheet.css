@@ -24,7 +24,8 @@ QLabel {
 }
 
 ListWidget, ListWidgetContainer {
-    background: #dde;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #bdf, stop:1 #257);
     border: 1px solid #999;
 }
 
@@ -87,6 +88,9 @@ TaskDescription {
 TaskDescriptionIndicator {
     color: #777;
     margin-left: 8px;
+}
+TaskDate {
+    font-style: italic;
 }
 TaskText {
     font-weight: bold;

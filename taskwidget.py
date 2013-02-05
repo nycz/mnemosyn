@@ -33,11 +33,14 @@ class TaskWidget(QtGui.QFrame):
 
         # =========== Tags ==========
         class TaskTag(QtGui.QLabel): pass
+        class TaskTagWarning(TaskTag): pass
         btm_layout = QtGui.QHBoxLayout()
         btm_layout.setMargin(0)
         btm_layout.setSpacing(0)
         for t in sorted(task['tags']):
             btm_layout.addWidget(TaskTag(t))
+        if not task['tags']:
+            btm_layout.addWidget(TaskTagWarning("Missing tags!"))
         btm_layout.addStretch()
         main_layout.addLayout(btm_layout)
         # =========================

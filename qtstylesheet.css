@@ -23,20 +23,21 @@ QLabel {
     color: black;
 }
 
-TaskWidget {
+TagWidget {
     background: #fff;
     border: 1px solid #999;
 }
 
-
+TaskWidget {
+    background: #fff;
+    border: 1px solid #999;
+}
 TaskNumber {
     color: #777;
 }
-
 TaskText {
     font-weight: bold;
 }
-
 TaskTags {
     font-style: italic;
 }

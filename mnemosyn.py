@@ -17,19 +17,19 @@ class ListWidget(QtGui.QScrollArea):
         self.setWidget(container)
         self.setWidgetResizable(True)
 
-    def addWidget(self, widget):
+    def add_widget(self, widget):
         self.internal_layout.addWidget(widget)
 
-    def addWidgets(self, datalist, widget_constructor):
+    def add_widgets(self, datalist, widget_constructor):
         for d in datalist:
             self.internal_layout.addWidget(widget_constructor(d))
         self.internal_layout.addStretch()
 
-    def appendWidget(self, widget):
+    def append_widget(self, widget):
         self.internal_layout.insertWidget(self.internal_layout.count()-1,
                                           widget)
 
-    def insertWidget(self, widget, pos):
+    def insert_widget(self, widget, pos):
         self.internal_layout.insertWidget(pos, widget)
 
 
@@ -49,12 +49,12 @@ class MainWindow(QtGui.QFrame):
 
         # ====== Tag widget =========
         self.tag_widget = ListWidget()
-        self.tag_widget.addWidgets(sorted(self.taglist), TagWidget)
+        self.tag_widget.add_widgets(sorted(self.taglist), TagWidget)
         # ===========================
 
         # ====== Task widget ========
         self.task_widget = ListWidget()
-        self.task_widget.addWidgets(self.tasklist, TaskWidget)
+        self.task_widget.add_widgets(self.tasklist, TaskWidget)
         # ===========================
 
         splitter.addWidget(self.tag_widget)
@@ -83,13 +83,14 @@ class MainWindow(QtGui.QFrame):
         if result:
             data = self.new_task_dialog.get_data()
             self.tasklist.append(data)
+            self.task_widget.append_widget(TaskWidget(data))
             self.counter += 1
             new_tags = set(data['tags']) - self.taglist
             self.taglist.update(data['tags'])
             for t in sorted(new_tags):
-                self.tag_widget.insertWidget(TagWidget(t),
-                                             sorted(self.taglist).index(t))
-            self.task_widget.appendWidget(TaskWidget(data))
+                widget = TagWidget(t)
+                self.tag_widget.insert_widget(widget,
+                                              sorted(self.taglist).index(t))
 
 
 def read_tasklist(path):

@@ -14,32 +14,47 @@ class TaskWidget(QtGui.QFrame):
         self.mouse_pos = None
 
         main_layout = QtGui.QVBoxLayout(self)
-
         kill_theming(main_layout)
 
-        # ====== Number and name ========
+        self.num = None
+        self.text = None
+        self.date = None
+        self.desc = None
+
+        self.create_number_and_name_row(task, main_layout)
+        self.create_date_row(task, main_layout)
+        self.create_tag_row(task, main_layout)
+        if task['desc']:
+            self.create_description_row(task, main_layout)
+
+
+# ======================== UI CREATION ===================================
+
+    def create_number_and_name_row(self, task, parent_layout):
         class TaskNumber(QtGui.QLabel): pass
-        num = TaskNumber('#{}'.format(task['num']))
+        self.num = TaskNumber('#{}'.format(task['num']))
 
         class TaskText(QtGui.QLabel): pass
         self.text = TaskText(task['text'])
 
         num_text_layout = QtGui.QHBoxLayout()
-        num_text_layout.addWidget(num)
+        num_text_layout.addWidget(self.num)
         num_text_layout.addWidget(self.text)
+        if task['desc']:
+            class TaskDescriptionIndicator(QtGui.QLabel): pass
+            self.desc_indicator = TaskDescriptionIndicator('[…]')
+            num_text_layout.addWidget(self.desc_indicator)
         num_text_layout.addStretch()
-        main_layout.addLayout(num_text_layout)
-        # ===========================
+        parent_layout.addLayout(num_text_layout)
 
-        # ============ Date ===========
+    def create_date_row(self, task, parent_layout):
         class TaskDate(QtGui.QLabel): pass
         self.date = TaskDate(task['date'])
-        main_layout.addWidget(self.date)
         if not task['date']:
             self.date.setVisible(False)
-        # ===========================
+        parent_layout.addWidget(self.date)
 
-        # =========== Tags ==========
+    def create_tag_row(self, task, parent_layout):
         class TaskTag(QtGui.QLabel): pass
         class TaskTagWarning(TaskTag): pass
         tag_layout = QtGui.QHBoxLayout()
@@ -50,21 +65,16 @@ class TaskWidget(QtGui.QFrame):
         if not task['tags']:
             tag_layout.addWidget(TaskTagWarning("Missing tags!"))
         tag_layout.addStretch()
-        main_layout.addLayout(tag_layout)
-        # =========================
+        parent_layout.addLayout(tag_layout)
 
-        # ====== Bottom row =======
-        if task['desc']:
-            class TaskDescription(QtGui.QLabel): pass
-            self.desc = TaskDescription(task['desc'])
-            self.desc.setVisible(False)
-            class TaskDescriptionIndicator(QtGui.QLabel): pass
-            self.desc_indicator = TaskDescriptionIndicator('[…]')
-            num_text_layout.insertWidget(num_text_layout.count()-1, self.desc_indicator)
-            main_layout.addWidget(self.desc)
-        else:
-            self.desc = None
-        # =========================
+    def create_description_row(self, task, parent_layout):
+        class TaskDescription(QtGui.QLabel): pass
+        self.desc = TaskDescription(task['desc'])
+        self.desc.setVisible(False)
+        parent_layout.addWidget(self.desc)
+
+# ===========================================================================
+
 
     def mousePressEvent(self, event):
         if self.desc:

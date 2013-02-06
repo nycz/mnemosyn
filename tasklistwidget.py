@@ -4,15 +4,11 @@ from common import kill_theming
 from genericlistwidget import ListWidget
 
 
-class TaskListWidget(QtGui.QFrame):
-
+class TaskListWidget(ListWidget):
+    class TaskListBackground(QtGui.QFrame): pass
     def __init__(self):
-        super().__init__()
-        self.list_widget = ListWidget()
-        main_layout = QtGui.QVBoxLayout(self)
-        kill_theming(main_layout)
-        main_layout.addWidget(self.list_widget)
-        self.create_sort_buttons(main_layout)
+        super().__init__(self.TaskListBackground)
+        self.create_sort_buttons(self.main_layout)
 
     def create_sort_buttons(self, parent_layout):
         class SortButtonContainer(QtGui.QFrame): pass
@@ -47,25 +43,10 @@ class TaskListWidget(QtGui.QFrame):
             self.sort_by_date()
 
     def sort_by_number(self):
-        self.list_widget.sort_generic(lambda x:x.num.text())
+        self.sort_generic(lambda x:x.num.text())
 
     def sort_by_name(self):
-        self.list_widget.sort_generic(lambda x:x.text.text().lower())
+        self.sort_generic(lambda x:x.text.text().lower())
 
     def sort_by_date(self):
-        self.list_widget.sort_generic(lambda x:x.date.text())
-
-
-    # ============= Overrides =============== #
-    def add_widget(self, *args):
-        self.list_widget.add_widget(*args)
-
-    def add_widgets(self, *args):
-        self.list_widget.add_widgets(*args)
-
-    def append_widget(self, *args):
-        self.list_widget.append_widget(*args)
-
-    def insert_widget(self, *args):
-        self.list_widget.insert_widget(*args)
-    # ======================================= #
+        self.sort_generic(lambda x:x.date.text())

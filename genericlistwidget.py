@@ -3,21 +3,41 @@ from PyQt4 import QtGui
 from common import kill_theming
 
 
-class ListWidget(QtGui.QScrollArea):
-    class ListWidgetContainer(QtGui.QWidget): pass
-
-    def __init__(self):
+class ListWidget(QtGui.QFrame):
+    def __init__(self, list_widget_background):
         super().__init__()
-        container = self.ListWidgetContainer()
-        self.internal_layout = QtGui.QVBoxLayout(container)
-        kill_theming(self.internal_layout)
+        self.internal_widget = ListWidgetScrollArea(list_widget_background)
+        self.main_layout = QtGui.QVBoxLayout(self)
+        kill_theming(self.main_layout)
+        self.main_layout.addWidget(self.internal_widget)
+
+    def sort_generic(self, *args):
+        self.internal_widget.sort_generic(*args)
+
+    def add_widgets(self, *args):
+        self.internal_widget.add_widgets(*args)
+
+    def append_widget(self, *args):
+        self.internal_widget.append_widget(*args)
+
+    def insert_widget(self, *args):
+        self.internal_widget.insert_widget(*args)
+
+
+class ListWidgetScrollArea(QtGui.QScrollArea):
+
+    def __init__(self, list_widget_background):
+        super().__init__()
+        container = list_widget_background()
+        self.layout = QtGui.QVBoxLayout(container)
+        kill_theming(self.layout)
         self.setWidget(container)
         self.setWidgetResizable(True)
 
     def sort_generic(self, key):
         widgets = []
         while True:
-            item = self.internal_layout.takeAt(0)
+            item = self.layout.takeAt(0)
             if not item:
                 break
             if not item.widget():
@@ -25,20 +45,17 @@ class ListWidget(QtGui.QScrollArea):
             widgets.append(item.widget())
         widgets.sort(key=key)
         for item in widgets:
-            self.internal_layout.addWidget(item)
-        self.internal_layout.addStretch()
-
-    def add_widget(self, widget):
-        self.internal_layout.addWidget(widget)
+            self.layout.addWidget(item)
+        self.layout.addStretch()
 
     def add_widgets(self, datalist, widget_constructor):
         for d in datalist:
-            self.internal_layout.addWidget(widget_constructor(d))
-        self.internal_layout.addStretch()
+            self.layout.addWidget(widget_constructor(d))
+        self.layout.addStretch()
 
     def append_widget(self, widget):
-        self.internal_layout.insertWidget(self.internal_layout.count()-1,
+        self.layout.insertWidget(self.layout.count()-1,
                                           widget)
 
     def insert_widget(self, widget, pos):
-        self.internal_layout.insertWidget(pos, widget)
+        self.layout.insertWidget(pos, widget)

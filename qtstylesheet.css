@@ -18,18 +18,19 @@ QWidget {
     font-size: 12pt;
 }
 
-ListWidget, ListWidgetContainer {
+/* ======== Generic list widgets ========== */
+/*ListWidget, ListWidgetContainer {*/
+ListWidget {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
                 stop:0 #bdf, stop:1 #257);
-    border: none;
+    border: 1px solid #999;
 }
 
-
 /* ============= Tag widget =============== */
-TagListWidget {
+TagListBackground {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
                 stop:0 white, stop:1 green);
-    border: 1px solid #999;
+    /*border: 1px solid #999;*/
 }
 
 TagWidget {
@@ -71,8 +72,9 @@ TagCount {
 
 
 /* ============= Task widget ============== */
-TaskListWidget {
-    border: 1px solid #999;
+TaskListBackground {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #bdf, stop:1 #257);
 }
 TaskWidget {
     background: #fff;
@@ -156,5 +158,3 @@ TaskTagWarning {
     background: #f44;
 }
 /* ======================================== */
-
-

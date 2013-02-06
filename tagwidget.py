@@ -49,8 +49,8 @@ class TagWidget(QtGui.QPushButton):
                         if self.name in t.task['tags']])
         visible = sum([1 for t in task_list_items
                         if self.name in t.task['tags']
-                        and t.isVisible()])
-        if num == visible:
+                        and t.is_visible])
+        if visible >= num:
             self.total_count_lbl.hide()
         else:
             self.total_count_lbl.show()

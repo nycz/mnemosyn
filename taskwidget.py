@@ -7,6 +7,8 @@ class TaskWidget(QtGui.QFrame):
         super().__init__()
         self.task = task
 
+        self.is_visible = True
+
         if task['closed']:
             self.hide()
 
@@ -71,6 +73,16 @@ class TaskWidget(QtGui.QFrame):
         parent_layout.addWidget(self.desc)
 
 # ===========================================================================
+
+    def setVisible(self, arg):
+        super().setVisible(arg)
+        self.is_visible = arg
+
+    def hide(self):
+        self.setVisible(False)
+
+    def show(self):
+        self.setVisible(True)
 
     def mouseReleaseEvent(self, event):
         if self.desc:

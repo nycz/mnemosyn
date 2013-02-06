@@ -51,7 +51,7 @@ class MainWindow(QtGui.QFrame):
 
         def save_tasks():
             write_tasklist(local_path('tasklist.json'), self.taglist,
-                            self.task_list_widget.list_items())
+                            self.tasklist)
 
         QtGui.QShortcut(QtGui.QKeySequence("Ctrl+N"), self, self.new_task)
         QtGui.QShortcut(QtGui.QKeySequence("Ctrl+S"), self, save_tasks)

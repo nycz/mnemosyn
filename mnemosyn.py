@@ -5,9 +5,10 @@ from PyQt4 import QtGui
 
 from common import local_path, read_json, write_json, kill_theming
 from newtaskdialog import NewTaskDialog
-from listwidgets import TagListWidget, TaskListWidget
-from taskwidget import TaskWidget
+from taglistwidget import TagListWidget
 from tagwidget import TagWidget
+from tasklistwidget import TaskListWidget
+from taskwidget import TaskWidget
 
 
 class MainWindow(QtGui.QFrame):

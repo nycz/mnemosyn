@@ -10,9 +10,6 @@ class TaskWidget(QtGui.QFrame):
         if task['closed']:
             self.setVisible(False)
 
-        self.mouse_down = False
-        self.mouse_pos = None
-
         main_layout = QtGui.QVBoxLayout(self)
         kill_theming(main_layout)
 
@@ -75,13 +72,7 @@ class TaskWidget(QtGui.QFrame):
 
 # ===========================================================================
 
-
-    def mousePressEvent(self, event):
-        if self.desc:
-            self.mouse_pos = event.pos()
-            self.mouse_down = True
-
     def mouseReleaseEvent(self, event):
-        if self.mouse_down and self.mouse_pos == event.pos():
+        if self.desc:
             self.desc.setVisible(not self.desc.isVisible())
             self.desc_indicator.setVisible(not self.desc.isVisible())

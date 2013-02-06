@@ -4,9 +4,10 @@ from common import kill_theming
 
 
 class ListWidget(QtGui.QFrame):
-    def __init__(self, list_widget_background):
+    def __init__(self, list_widget_background, item_constructor):
         super().__init__()
         self.internal_widget = ListWidgetScrollArea(list_widget_background)
+        self.internal_widget.item_constructor = item_constructor
         self.main_layout = QtGui.QVBoxLayout(self)
         kill_theming(self.main_layout)
         self.main_layout.addWidget(self.internal_widget)
@@ -21,10 +22,10 @@ class ListWidget(QtGui.QFrame):
         self.internal_widget.add_widgets(*args)
 
     def append_widget(self, *args):
-        self.internal_widget.append_widget(*args)
+        return self.internal_widget.append_widget(*args)
 
     def insert_widget(self, *args):
-        self.internal_widget.insert_widget(*args)
+        return self.internal_widget.insert_widget(*args)
 
 
 class ListWidgetScrollArea(QtGui.QScrollArea):
@@ -52,17 +53,21 @@ class ListWidgetScrollArea(QtGui.QScrollArea):
             self.layout.addWidget(item)
         self.layout.addStretch()
 
-    def add_widgets(self, datalist, widget_constructor):
+    def add_widgets(self, datalist):
         for d in datalist:
-            item = widget_constructor(d)
+            item = self.item_constructor(d)
             self.layout.addWidget(item)
             self.list_items.append(item)
         self.layout.addStretch()
 
-    def append_widget(self, widget):
-        self.layout.insertWidget(self.layout.count()-1, widget)
-        self.list_items.append(widget)
+    def append_widget(self, data):
+        item = self.item_constructor(data)
+        self.layout.insertWidget(self.layout.count()-1, item)
+        self.list_items.append(item)
+        return item
 
-    def insert_widget(self, widget, pos):
-        self.layout.insertWidget(pos, widget)
-        self.list_items.append(widget)
+    def insert_widget(self, data, pos):
+        item = self.item_constructor(data)
+        self.layout.insertWidget(pos, item)
+        self.list_items.append(item)
+        return item

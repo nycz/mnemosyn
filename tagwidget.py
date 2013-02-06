@@ -27,6 +27,11 @@ class TagWidget(QtGui.QPushButton):
         self.name_lbl = self.TagName(name, self)
         main_layout.addWidget(self.name_lbl)
         main_layout.addStretch()
+
+        class TagTotalCount(self.TagName): pass
+        self.total_count_lbl = TagTotalCount('1', self)
+        main_layout.addWidget(self.total_count_lbl)
+
         class TagCount(self.TagName): pass
         self.count_lbl = TagCount('1', self)
         main_layout.addWidget(self.count_lbl)
@@ -35,10 +40,19 @@ class TagWidget(QtGui.QPushButton):
         self.setLayout(main_layout)
 
         def toggle_children():
-            self.name_lbl.setChecked(self.isChecked())
-            self.count_lbl.setChecked(self.isChecked())
+            for i in (self.name_lbl, self.count_lbl, self.total_count_lbl):
+                i.setChecked(self.isChecked())
         self.toggled.connect(toggle_children)
 
-    def update_count(self, tasklist):
-        num = sum([1 for t in tasklist if self.name in t['tags']])
-        self.count_lbl.setText(str(num))
+    def update_count(self, task_list_items):
+        num = sum([1 for t in task_list_items
+                        if self.name in t.task['tags']])
+        visible = sum([1 for t in task_list_items
+                        if self.name in t.task['tags']
+                        and t.isVisible()])
+        if num == visible:
+            self.total_count_lbl.setVisible(False)
+        else:
+            self.total_count_lbl.setVisible(True)
+        self.total_count_lbl.setText('({})'.format(num))
+        self.count_lbl.setText(str(visible))

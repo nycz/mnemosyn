@@ -60,7 +60,7 @@ class TaskWidget(QtGui.QFrame):
         for t in sorted(task['tags']):
             tag_layout.addWidget(TaskTag(t))
         if not task['tags']:
-            tag_layout.addWidget(TaskTagWarning("Missing tags!"))
+            tag_layout.addWidget(TaskTagWarning("not tagged"))
         tag_layout.addStretch()
         parent_layout.addLayout(tag_layout)
 

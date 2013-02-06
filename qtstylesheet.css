@@ -68,6 +68,17 @@ TagCount {
 }
     TagCount:flat {}
     TagCount:checked {}
+TagTotalCount {
+    font-size: 10pt;
+    font-style: italic;
+    margin-right: 5px;
+}
+    TagTotalCount:flat {
+        color: #555;
+    }
+    TagTotalCount:checked {
+        color: #888;
+    }
 /* ======================================== */
 
 

@@ -2,12 +2,13 @@ from PyQt4 import QtGui
 
 from common import kill_theming
 from genericlistwidget import ListWidget
+from taskwidget import TaskWidget
 
 
 class TaskListWidget(ListWidget):
     class TaskListBackground(QtGui.QFrame): pass
     def __init__(self):
-        super().__init__(self.TaskListBackground)
+        super().__init__(self.TaskListBackground, TaskWidget)
         self.create_sort_buttons(self.main_layout)
         self.enabled_tags = set()
 

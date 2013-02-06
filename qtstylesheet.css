@@ -8,12 +8,12 @@
     selection-color: {term_input_bgcolor};
     selection-background-color: {term_input_textcolor};
 }*/
-
 MainWindow {
-    background: #333;
+    /*This should never be visbile*/
+    background: red;
 }
 
-QLabel {
+QWidget {
     font-family: Calibri;
     font-size: 12pt;
     /*background: #acf;
@@ -26,14 +26,15 @@ QLabel {
 ListWidget, ListWidgetContainer {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
                 stop:0 #bdf, stop:1 #257);
-    border: 1px solid #999;
+    border: none;
 }
 
 
 /* ============= Tag widget =============== */
 TagListWidget {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 white, stop:1 green)
+                stop:0 white, stop:1 green);
+    border: 1px solid #999;
 }
 
 TagWidget {
@@ -68,6 +69,9 @@ TagCount {
 
 
 /* ============= Task widget ============== */
+TaskListWidget {
+    border: 1px solid #999;
+}
 TaskWidget {
     background: #fff;
     border: 1px solid #999;
@@ -76,6 +80,43 @@ TaskWidget {
     margin-top: 8px;
     padding: 5px;
 }
+
+/* ------------- Sorting buttons ---------- */
+SortButtonContainer {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #28282f, stop:1 #111119);
+    border-top: 1px solid #333;
+    padding: 8px;
+    padding-left: 16px;
+}
+SortButtonLabel {
+    color: #eee;
+    margin-right: 10px;
+}
+SortButton {
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 10pt;
+    margin-left: 8px;
+    padding:5px;
+}
+/*SortButton:flat {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #778, stop:1 #223);
+    color: #222;
+}*/
+SortButton:flat {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #dde, stop:1 #778);
+    color: #000;
+}
+SortButton:checked {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #001, stop:1 #445);
+    color: #ccc;
+}
+/* ---------------------------------------- */
+
 TaskNumber {
     color: #777;
     font-style: italic;

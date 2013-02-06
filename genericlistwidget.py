@@ -11,6 +11,9 @@ class ListWidget(QtGui.QFrame):
         kill_theming(self.main_layout)
         self.main_layout.addWidget(self.internal_widget)
 
+    def list_items(self):
+        return self.internal_widget.list_items
+
     def sort_generic(self, *args):
         self.internal_widget.sort_generic(*args)
 
@@ -29,6 +32,7 @@ class ListWidgetScrollArea(QtGui.QScrollArea):
     def __init__(self, list_widget_background):
         super().__init__()
         container = list_widget_background()
+        self.list_items = []
         self.layout = QtGui.QVBoxLayout(container)
         kill_theming(self.layout)
         self.setWidget(container)
@@ -50,12 +54,15 @@ class ListWidgetScrollArea(QtGui.QScrollArea):
 
     def add_widgets(self, datalist, widget_constructor):
         for d in datalist:
-            self.layout.addWidget(widget_constructor(d))
+            item = widget_constructor(d)
+            self.layout.addWidget(item)
+            self.list_items.append(item)
         self.layout.addStretch()
 
     def append_widget(self, widget):
-        self.layout.insertWidget(self.layout.count()-1,
-                                          widget)
+        self.layout.insertWidget(self.layout.count()-1, widget)
+        self.list_items.append(widget)
 
     def insert_widget(self, widget, pos):
         self.layout.insertWidget(pos, widget)
+        self.list_items.append(widget)

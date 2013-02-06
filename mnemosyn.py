@@ -34,6 +34,8 @@ class MainWindow(QtGui.QFrame):
         # ====== Task widget ========
         self.task_widget = TaskListWidget()
         self.task_widget.add_widgets(self.tasklist, TaskWidget)
+        self.tag_widget.tag_selection_updated.connect(\
+                        self.task_widget.update_tag_selection)
         # ===========================
 
         splitter.addWidget(self.tag_widget)

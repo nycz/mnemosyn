@@ -9,6 +9,7 @@ class TaskListWidget(ListWidget):
     def __init__(self):
         super().__init__(self.TaskListBackground)
         self.create_sort_buttons(self.main_layout)
+        self.enabled_tags = set()
 
     def create_sort_buttons(self, parent_layout):
         class SortButtonContainer(QtGui.QFrame): pass
@@ -33,6 +34,25 @@ class TaskListWidget(ListWidget):
         btn_layout.addStretch()
 
         btn_group.buttonClicked.connect(self.sort_list)
+
+    def update_tag_selection(self, tag, enabled):
+        if enabled:
+            self.enabled_tags.add(tag)
+        else:
+            self.enabled_tags.remove(tag)
+        for item in self.list_items():
+            # Show all items if no tags are selected
+            if not self.enabled_tags:
+                item.setVisible(True)
+            else:
+                # Hide all tags that don't have all selected tags
+                for t in self.enabled_tags:
+                    if t not in item.task['tags']:
+                        item.setVisible(False)
+                        break
+                # Show all the others
+                else:
+                    item.setVisible(True)
 
     def sort_list(self, btn):
         if btn.text() == 'number':

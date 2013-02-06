@@ -44,16 +44,16 @@ class TaskListWidget(ListWidget):
         for item in self.list_items():
             # Show all items if no tags are selected
             if not self.enabled_tags:
-                item.setVisible(True)
+                item.show()
             else:
                 # Hide all tags that don't have all selected tags
                 for t in self.enabled_tags:
                     if t not in item.task['tags']:
-                        item.setVisible(False)
+                        item.hide()
                         break
                 # Show all the others
                 else:
-                    item.setVisible(True)
+                    item.show()
 
     def sort_list(self, btn):
         if btn.text() == 'number':

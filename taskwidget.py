@@ -8,7 +8,7 @@ class TaskWidget(QtGui.QFrame):
         self.task = task
 
         if task['closed']:
-            self.setVisible(False)
+            self.hide()
 
         main_layout = QtGui.QVBoxLayout(self)
         kill_theming(main_layout)
@@ -48,7 +48,7 @@ class TaskWidget(QtGui.QFrame):
         class TaskDate(QtGui.QLabel): pass
         self.date = TaskDate(task['date'])
         if not task['date']:
-            self.date.setVisible(False)
+            self.date.hide()
         parent_layout.addWidget(self.date)
 
     def create_tag_row(self, task, parent_layout):
@@ -67,7 +67,7 @@ class TaskWidget(QtGui.QFrame):
     def create_description_row(self, task, parent_layout):
         class TaskDescription(QtGui.QLabel): pass
         self.desc = TaskDescription(task['desc'])
-        self.desc.setVisible(False)
+        self.desc.hide()
         parent_layout.addWidget(self.desc)
 
 # ===========================================================================

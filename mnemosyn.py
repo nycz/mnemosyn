@@ -13,7 +13,6 @@ class MainWindow(QtGui.QFrame):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Mnemosyn')
-        self.new_task_dialog = NewTaskDialog(self)
 
         main_layout = QtGui.QHBoxLayout(self)
         kill_theming(main_layout)
@@ -85,21 +84,6 @@ class MainWindow(QtGui.QFrame):
             self.tag_list_widget.insert_widget(t,
                     sorted(self.taglist).index(t))
         self.tag_list_widget.update_tag_count()
-
-    def new_task(self):
-        self.new_task_dialog.reset(self.counter)
-        result = self.new_task_dialog.exec_()
-        if result:
-            data = self.new_task_dialog.get_data()
-            self.tasklist.append(data)
-            self.task_list_widget.append_widget(data)
-            self.counter += 1
-            new_tags = data['tags'] - self.taglist
-            self.taglist.update(data['tags'])
-            for t in sorted(new_tags):
-                self.tag_list_widget.insert_widget(t,
-                        sorted(self.taglist).index(t))
-            self.tag_list_widget.update_tag_count()
 
 
 def read_tasklist(path):

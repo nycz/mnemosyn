@@ -5,6 +5,7 @@ from PyQt4 import QtGui
 
 from common import local_path, read_json, write_json, kill_theming
 from newtaskdialog import NewTaskDialog
+from taskinputform import TaskInputForm
 from taglistwidget import TagListWidget
 from tasklistwidget import TaskListWidget
 
@@ -24,10 +25,23 @@ class MainWindow(QtGui.QFrame):
         splitter = QtGui.QSplitter(self)
         main_layout.addWidget(splitter)
 
+        task_layout_container = QtGui.QWidget()
+        task_layout = QtGui.QVBoxLayout(task_layout_container)
+        kill_theming(task_layout)
+
         # ====== Task widget ========
         self.task_list_widget = TaskListWidget()
         self.task_list_widget.add_widgets(self.tasklist)
+        task_layout.addWidget(self.task_list_widget)
+        task_layout.setStretchFactor(self.task_list_widget, 1)
         # ===========================
+
+        # ====== New Task input form =================
+        self.task_input_form = TaskInputForm()
+        self.task_input_form.task_created.connect(self.task_created)
+        task_layout.addWidget(self.task_input_form)
+        task_layout.setStretchFactor(self.task_input_form, 0)
+        # ============================================
 
         # ====== Tag widget =========
         self.tag_list_widget = TagListWidget(self.task_list_widget.list_items)
@@ -37,7 +51,7 @@ class MainWindow(QtGui.QFrame):
         # ===========================
 
         splitter.addWidget(self.tag_list_widget)
-        splitter.addWidget(self.task_list_widget)
+        splitter.addWidget(task_layout_container)
         splitter.setStretchFactor(0,0)
         splitter.setStretchFactor(1,1)
 
@@ -53,12 +67,24 @@ class MainWindow(QtGui.QFrame):
             write_tasklist(local_path('tasklist.json'), self.taglist,
                             self.tasklist)
 
-        QtGui.QShortcut(QtGui.QKeySequence("Ctrl+N"), self, self.new_task)
+        QtGui.QShortcut(QtGui.QKeySequence("Ctrl+N"), self,
+                        lambda: self.task_input_form.activate(self.counter))
         QtGui.QShortcut(QtGui.QKeySequence("Ctrl+S"), self, save_tasks)
 
         self.show()
         self.resize(800,600)
         splitter.moveSplitter(200,1)
+        self.tag_list_widget.update_tag_count()
+
+    def task_created(self, data):
+        self.tasklist.append(data)
+        self.task_list_widget.append_widget(data)
+        self.counter += 1
+        new_tags = data['tags'] - self.taglist
+        self.taglist.update(data['tags'])
+        for t in sorted(new_tags):
+            self.tag_list_widget.insert_widget(t,
+                    sorted(self.taglist).index(t))
         self.tag_list_widget.update_tag_count()
 
     def new_task(self):

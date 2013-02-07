@@ -166,3 +166,34 @@ TaskTagWarning {
     background: #f44;
 }
 /* ======================================== */
+
+
+/* =========== New task form ============== */
+TaskInputForm {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                stop:0 #adb, stop:1 #7a8);
+}
+TaskInputFormTitle {
+
+}
+TaskInputFormLabel {
+    font-weight: bold;
+    margin-left: 6px;
+    margin-right: 2px;
+}
+TaskInputFormField {
+    border: none;
+    margin: 2px;
+    margin-right: 5px;
+    selection-color: white;
+    selection-background-color: black;
+}
+TaskInputFormMultiLine {
+    border: none;
+    margin: 2px;
+    margin-right: 5px;
+    selection-color: white;
+    selection-background-color: black;
+
+}
+/* ======================================== */

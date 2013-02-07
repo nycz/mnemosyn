@@ -19,18 +19,16 @@ QWidget {
 }
 
 /* ======== Generic list widgets ========== */
-/*ListWidget, ListWidgetContainer {*/
 ListWidget {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
                 stop:0 #bdf, stop:1 #257);
-    border: 1px solid #999;
+    /*border: 1px solid #999;*/
 }
 
 /* ============= Tag widget =============== */
 TagListBackground {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
                 stop:0 white, stop:1 green);
-    /*border: 1px solid #999;*/
 }
 
 TagWidget {
@@ -89,7 +87,6 @@ TaskListBackground {
 }
 TaskWidget {
     background: #fff;
-    border: 1px solid #999;
     border-radius: 10px;
     margin-left: 8px;
     margin-right: 8px;

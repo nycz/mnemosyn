@@ -4,7 +4,6 @@ import sys
 from PyQt4 import QtGui
 
 from common import local_path, read_json, write_json, kill_theming
-from newtaskdialog import NewTaskDialog
 from taskinputform import TaskInputForm
 from taglistwidget import TagListWidget
 from tasklistwidget import TaskListWidget

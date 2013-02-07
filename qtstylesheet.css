@@ -197,3 +197,24 @@ TaskInputFormMultiLine {
 
 }
 /* ======================================== */
+
+
+/* =========== New task form ============== */
+CalendarWidget {
+    background: #553;
+    /*border: 1px solid #111;*/
+}
+CalendarDay {
+    background: #898;
+    margin: 1px;
+    qproperty-alignment: AlignRight;
+}
+CalendarFiller {
+    background: #aaa;
+    margin: 1px;
+}
+CalendarWeekNumber {
+    background: #988;
+    color: #555;
+}
+/* ======================================== */

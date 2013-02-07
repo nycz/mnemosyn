@@ -7,6 +7,7 @@ from common import local_path, read_json, write_json, kill_theming
 from taskinputform import TaskInputForm
 from taglistwidget import TagListWidget
 from tasklistwidget import TaskListWidget
+from calendarwidget import CalendarWidget
 
 
 class MainWindow(QtGui.QFrame):
@@ -27,6 +28,10 @@ class MainWindow(QtGui.QFrame):
         task_layout = QtGui.QVBoxLayout(task_layout_container)
         kill_theming(task_layout)
 
+        tag_layout_container = QtGui.QWidget()
+        tag_layout = QtGui.QVBoxLayout(tag_layout_container)
+        kill_theming(tag_layout)
+
         # ====== Task widget ========
         self.task_list_widget = TaskListWidget()
         self.task_list_widget.add_widgets(self.tasklist)
@@ -46,9 +51,16 @@ class MainWindow(QtGui.QFrame):
         self.tag_list_widget.add_widgets(sorted(self.taglist))
         self.tag_list_widget.tag_selection_updated.connect(\
                         self.task_list_widget.update_tag_selection)
+        tag_layout.addWidget(self.tag_list_widget)
+        # task_layout.setStretchFactor(self.task_list_widget, 1)
         # ===========================
 
-        splitter.addWidget(self.tag_list_widget)
+        # ======= Calendar widget ===============
+        self.calendar_widget = CalendarWidget()
+        tag_layout.addWidget(self.calendar_widget)
+        # =======================================
+
+        splitter.addWidget(tag_layout_container)
         splitter.addWidget(task_layout_container)
         splitter.setStretchFactor(0,0)
         splitter.setStretchFactor(1,1)

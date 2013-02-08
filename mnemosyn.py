@@ -1,14 +1,17 @@
+from datetime import date
 import os.path
 import sys
 
 from PyQt4 import QtGui
 
-from common import local_path, read_json, write_json, kill_theming
+from common import local_path, read_json, write_json
+from common import get_date_interval, kill_theming
 from taskinputform import TaskInputForm
 from taglistwidget import TagListWidget
 from tasklistwidget import TaskListWidget
 from calendarwidget import CalendarWidget
-
+from dateintervalwidget import DateIntervalWidget
+from dateintervalinputwidget import DateIntervalInputWidget
 
 class MainWindow(QtGui.QFrame):
     def __init__(self):
@@ -25,6 +28,7 @@ class MainWindow(QtGui.QFrame):
         main_layout.addWidget(splitter)
 
         # Create right (task) column
+        self.date_interval_widget,\
         self.task_list_widget,\
         self.task_input_form,\
         task_column\
@@ -32,6 +36,7 @@ class MainWindow(QtGui.QFrame):
 
         # Create left (tag and calendar) column
         self.tag_list_widget,\
+        self.date_interval_input,\
         self.calendar_widget,\
         tag_column,\
             = self.create_left_ui_column(self.task_list_widget.list_items,
@@ -41,6 +46,8 @@ class MainWindow(QtGui.QFrame):
         self.task_input_form.task_created.connect(self.task_created)
         self.tag_list_widget.tag_selection_updated.connect(\
                         self.task_list_widget.update_tag_selection)
+        self.date_interval_input.interval_entered.connect(\
+                        self.set_date_interval)
 
         splitter.addWidget(tag_column)
         splitter.addWidget(task_column)
@@ -71,6 +78,10 @@ class MainWindow(QtGui.QFrame):
     def create_right_ui_column(self, tasklist):
         container, layout = create_basic_layout()
 
+        # Date interval label
+        date_interval_widget = DateIntervalWidget()
+        layout.addWidget(date_interval_widget)
+
         # Task list
         task_list_widget = TaskListWidget()
         task_list_widget.add_widgets(tasklist)
@@ -82,8 +93,8 @@ class MainWindow(QtGui.QFrame):
         layout.addWidget(task_input_form)
         layout.setStretchFactor(task_input_form, 0)
 
-        return task_list_widget, task_input_form, container
-
+        return date_interval_widget, task_list_widget, task_input_form,\
+                container
 
     def create_left_ui_column(self, task_list_items, taglist):
         container, layout = create_basic_layout()
@@ -93,11 +104,16 @@ class MainWindow(QtGui.QFrame):
         tag_list_widget.add_widgets(sorted(taglist))
         layout.addWidget(tag_list_widget)
 
+        # Date interval input field
+        date_interval_input = DateIntervalInputWidget()
+        layout.addWidget(date_interval_input)
+
         # Calendar widget
         calendar_widget = CalendarWidget()
         layout.addWidget(calendar_widget)
 
-        return tag_list_widget, calendar_widget, container
+        return tag_list_widget, date_interval_input, calendar_widget,\
+                container
 
     def task_created(self, data):
         self.tasklist.append(data)
@@ -109,6 +125,17 @@ class MainWindow(QtGui.QFrame):
             self.tag_list_widget.insert_widget(t,
                     sorted(self.taglist).index(t))
         self.tag_list_widget.update_tag_count()
+
+    def set_date_interval(self, text):
+        if not text:
+            self.date_interval_widget.hide()
+        else:
+            try:
+                self.date_interval_widget.set_interval(*get_date_interval(text))
+            except ValueError:
+                pass
+
+
 
 def create_basic_layout():
     container = QtGui.QWidget()

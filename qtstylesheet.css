@@ -199,7 +199,7 @@ TaskInputFormMultiLine {
 /* ======================================== */
 
 
-/* =========== New task form ============== */
+/* =========== Calendar widget ============== */
 CalendarWidget {
     background: #553;
     /*border: 1px solid #111;*/
@@ -216,5 +216,31 @@ CalendarFiller {
 CalendarWeekNumber {
     background: #988;
     color: #555;
+}
+/* ======================================== */
+
+
+/* ======== Date interval widget ========== */
+DateIntervalWidget {
+    background: #9ad;
+    /*border: 1px solid #111;*/
+    padding: 3px;
+}
+DateIntervalLabel {
+    font-weight: bold;
+}
+/* ======================================== */
+
+
+/* ======== Date interval input field ========== */
+DateIntervalInputWidget {
+    background: #9ad;
+    /*border: 1px solid #111;*/
+    padding: 3px;
+}
+DateIntervalInputField {
+}
+DateIntervalInputLabel {
+    font-weight: bold;
 }
 /* ======================================== */

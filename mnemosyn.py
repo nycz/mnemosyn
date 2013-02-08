@@ -24,44 +24,26 @@ class MainWindow(QtGui.QFrame):
         splitter = QtGui.QSplitter(self)
         main_layout.addWidget(splitter)
 
-        task_layout_container = QtGui.QWidget()
-        task_layout = QtGui.QVBoxLayout(task_layout_container)
-        kill_theming(task_layout)
+        # Create right (task) column
+        self.task_list_widget,\
+        self.task_input_form,\
+        task_column\
+            = self.create_right_ui_column(self.tasklist)
 
-        tag_layout_container = QtGui.QWidget()
-        tag_layout = QtGui.QVBoxLayout(tag_layout_container)
-        kill_theming(tag_layout)
+        # Create left (tag and calendar) column
+        self.tag_list_widget,\
+        self.calendar_widget,\
+        tag_column,\
+            = self.create_left_ui_column(self.task_list_widget.list_items,
+                                         self.taglist)
 
-        # ====== Task widget ========
-        self.task_list_widget = TaskListWidget()
-        self.task_list_widget.add_widgets(self.tasklist)
-        task_layout.addWidget(self.task_list_widget)
-        task_layout.setStretchFactor(self.task_list_widget, 1)
-        # ===========================
-
-        # ====== New Task input form =================
-        self.task_input_form = TaskInputForm()
+        # Connect slots/signals
         self.task_input_form.task_created.connect(self.task_created)
-        task_layout.addWidget(self.task_input_form)
-        task_layout.setStretchFactor(self.task_input_form, 0)
-        # ============================================
-
-        # ====== Tag widget =========
-        self.tag_list_widget = TagListWidget(self.task_list_widget.list_items)
-        self.tag_list_widget.add_widgets(sorted(self.taglist))
         self.tag_list_widget.tag_selection_updated.connect(\
                         self.task_list_widget.update_tag_selection)
-        tag_layout.addWidget(self.tag_list_widget)
-        # task_layout.setStretchFactor(self.task_list_widget, 1)
-        # ===========================
 
-        # ======= Calendar widget ===============
-        self.calendar_widget = CalendarWidget()
-        tag_layout.addWidget(self.calendar_widget)
-        # =======================================
-
-        splitter.addWidget(tag_layout_container)
-        splitter.addWidget(task_layout_container)
+        splitter.addWidget(tag_column)
+        splitter.addWidget(task_column)
         splitter.setStretchFactor(0,0)
         splitter.setStretchFactor(1,1)
 
@@ -86,6 +68,37 @@ class MainWindow(QtGui.QFrame):
         splitter.moveSplitter(200,1)
         self.tag_list_widget.update_tag_count()
 
+    def create_right_ui_column(self, tasklist):
+        container, layout = create_basic_layout()
+
+        # Task list
+        task_list_widget = TaskListWidget()
+        task_list_widget.add_widgets(tasklist)
+        layout.addWidget(task_list_widget)
+        layout.setStretchFactor(task_list_widget, 1)
+
+        # New Task input form
+        task_input_form = TaskInputForm()
+        layout.addWidget(task_input_form)
+        layout.setStretchFactor(task_input_form, 0)
+
+        return task_list_widget, task_input_form, container
+
+
+    def create_left_ui_column(self, task_list_items, taglist):
+        container, layout = create_basic_layout()
+
+        # Tag list
+        tag_list_widget = TagListWidget(task_list_items)
+        tag_list_widget.add_widgets(sorted(taglist))
+        layout.addWidget(tag_list_widget)
+
+        # Calendar widget
+        calendar_widget = CalendarWidget()
+        layout.addWidget(calendar_widget)
+
+        return tag_list_widget, calendar_widget, container
+
     def task_created(self, data):
         self.tasklist.append(data)
         self.task_list_widget.append_widget(data)
@@ -97,6 +110,11 @@ class MainWindow(QtGui.QFrame):
                     sorted(self.taglist).index(t))
         self.tag_list_widget.update_tag_count()
 
+def create_basic_layout():
+    container = QtGui.QWidget()
+    layout = QtGui.QVBoxLayout(container)
+    kill_theming(layout)
+    return container, layout
 
 def read_tasklist(path):
     data = read_json(path)

@@ -26,6 +26,8 @@ class TaskWidget(QtGui.QFrame):
         if task['desc']:
             self.create_description_row(task, main_layout)
 
+    def has_tag(self, tag):
+        return tag in self.task['tags']
 
 # ======================== UI CREATION ===================================
 

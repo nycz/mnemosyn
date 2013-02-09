@@ -44,11 +44,11 @@ class TagWidget(QtGui.QPushButton):
                 i.setChecked(self.isChecked())
         self.toggled.connect(toggle_children)
 
-    def update_count(self, task_list_items):
-        num = sum([1 for t in task_list_items
-                        if self.name in t.task['tags']])
-        visible = sum([1 for t in task_list_items
-                        if self.name in t.task['tags']
+    def update_count(self, get_filterable_items):
+        num = sum([1 for t in get_filterable_items
+                        if t.has_tag(self.name)])
+        visible = sum([1 for t in get_filterable_items
+                        if t.has_tag(self.name)
                         and t.is_visible])
         if visible >= num:
             self.total_count_lbl.hide()
